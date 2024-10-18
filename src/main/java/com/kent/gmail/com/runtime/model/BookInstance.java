@@ -16,6 +16,9 @@ public class BookInstance extends Base {
 
   private Boolean blocked;
 
+  @OneToMany(mappedBy = "bookInstance")
+  private List<BookInstanceCondition> conditions;
+
   /**
    * @return bookInstanceLenderToBookInstances
    */
@@ -65,5 +68,14 @@ public class BookInstance extends Base {
   public <T extends BookInstance> T setBlocked(Boolean blocked) {
     this.blocked = blocked;
     return (T) this;
+  }
+
+
+  public List<BookInstanceCondition> getConditions() {
+    return conditions;
+  }
+
+  public void setConditions(List<BookInstanceCondition> conditions) {
+    this.conditions = conditions;
   }
 }
