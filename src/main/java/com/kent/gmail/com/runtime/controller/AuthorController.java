@@ -4,6 +4,7 @@ import com.kent.gmail.com.runtime.model.Author;
 import com.kent.gmail.com.runtime.request.AuthorCreate;
 import com.kent.gmail.com.runtime.request.AuthorFilter;
 import com.kent.gmail.com.runtime.request.AuthorUpdate;
+import com.kent.gmail.com.runtime.request.CoAuthorFilter;
 import com.kent.gmail.com.runtime.response.PaginationResponse;
 import com.kent.gmail.com.runtime.security.UserSecurityContext;
 import com.kent.gmail.com.runtime.service.AuthorService;
@@ -17,6 +18,8 @@ import org.springframework.security.core.Authentication;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.bind.annotation.PathVariable;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("Author")
@@ -64,5 +67,16 @@ public class AuthorController {
     UserSecurityContext securityContext = (UserSecurityContext) authentication.getPrincipal();
 
     return authorService.updateAuthor(authorUpdate, securityContext);
+  }
+
+  @PostMapping("findAuthorsWithCoAuthors")
+  @Operation(summary = "findAuthorsWithCoAuthors", description = "Finds all authors that have written a book with someone else")
+  public List<Author> findAuthorsWithCoAuthors(
+          @Validated CoAuthorFilter coAuthorFilter,
+          Authentication authentication) {
+
+    UserSecurityContext securityContext = (UserSecurityContext) authentication.getPrincipal();
+
+    return authorService.findAuthorsWithCoAuthors();
   }
 }

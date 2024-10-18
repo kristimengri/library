@@ -140,4 +140,9 @@ public class AuthorService {
   public void massMerge(List<?> toMerge) {
     this.repository.massMerge(toMerge);
   }
+
+
+  public List<Author> findAuthorsWithCoAuthors() {
+    return repository.findAuthorsWithCoAuthors();
+  }
 }

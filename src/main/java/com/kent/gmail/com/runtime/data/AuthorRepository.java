@@ -146,4 +146,12 @@ public class AuthorRepository {
       applicationEventPublisher.publishEvent(updated);
     }
   }
+
+
+  public List<Author> findAuthorsWithCoAuthors() {
+    String jpql = "SELECT a FROM Author a JOIN a.authorAuthorToBooks ab WHERE " +
+            "ab.book.id IN (SELECT ab2.book.id FROM AuthorToBook ab2 WHERE ab2.author != a.author)";
+    TypedQuery<Author> query = em.createQuery(jpql, Author.class);
+    return query.getResultList();
+  }
 }
